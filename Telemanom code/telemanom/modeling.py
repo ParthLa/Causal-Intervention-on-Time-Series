@@ -60,7 +60,7 @@ class Model:
         self.model = load_model(os.path.join('data', self.config.use_id,
                                              'models', self.chan_id + '.h5'))
 
-    def train_new(self, channel):
+    def train_new(self, channel, model_name):
         """
         Train LSTM model according to specifications in config.yaml.
 
@@ -74,7 +74,12 @@ class Model:
                                         min_delta=self.config.min_delta,
                                         verbose=0)]
 
-        self.model = Sequential()
+        if(model_name=="LSTM"):
+            self.model = Sequential()
+        else:
+            self.model = Transformer() # improvize
+        # put a flag 
+        # if LSTM, evoke sequential else transformer
 
         self.model.add(LSTM(
             self.config.layers[0],
@@ -91,6 +96,8 @@ class Model:
             self.config.n_predictions))
         self.model.add(Activation('linear'))
 
+        # ---------------------------------- (adding layers is independent of number of time steps prediction)
+
         self.model.compile(loss=self.config.loss_metric,
                            optimizer=self.config.optimizer)
 
@@ -101,6 +108,15 @@ class Model:
                        validation_split=self.config.validation_split,
                        callbacks=cbs,
                        verbose=True)
+        # LSTM till here
+
+        # Transformer can't be trained by fit. it's feature of keras.
+        # need to make data loader here.
+        # training of Transformer
+        # channel.x_train, channel.y_train se batches mei train karo
+
+
+        
 
     def save(self):
         """
@@ -114,7 +130,7 @@ class Model:
         """
         Aggregates predictions for each timestep. When predicting n steps
         ahead where n > 1, will end up with multiple predictions for a
-        timestep.
+        timestep. (at t=1 -> 2,3,4. at t=2 -> 3,4,5, ...)
 
         Args:
             y_hat_batch (arr): predictions shape (<batch length>, <n_preds)
@@ -168,8 +184,11 @@ class Model:
                 idx = channel.y_test.shape[0]
 
             X_test_batch = channel.X_test[prior_idx:idx]
-            y_hat_batch = self.model.predict(X_test_batch) # need to change output of predict from scalar to vector for each instance in the batch
-            self.aggregate_predictions(y_hat_batch)
+            y_hat_batch = self.model.predict(X_test_batch) # is it 1 - ts by default ?
+            # [0,20] -> [1,21]. We want [0,20] -> [10,30] 
+            # 0 -> 1. 0,1 -> 2. 0,1,2 -> 3 
+            # need to change output of predict from scalar to vector for each instance in the batch
+            self.aggregate_predictions(y_hat_batch) # 100 x 3
 
         self.y_hat = np.reshape(self.y_hat, (self.y_hat.size,))
 

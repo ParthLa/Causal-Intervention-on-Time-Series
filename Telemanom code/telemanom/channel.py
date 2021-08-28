@@ -60,11 +60,14 @@ class Channel:
 
         if train:
             np.random.shuffle(data)
-            self.X_train = data[:, :-self.config.n_predictions, :]
+            self.X_train = data[:, :-self.config.n_predictions, :] # batch x time_val x num_features, need to inspect
             self.y_train = data[:, -self.config.n_predictions:, 0]  # telemetry value is at position 0
         else:
             self.X_test = data[:, :-self.config.n_predictions, :]
             self.y_test = data[:, -self.config.n_predictions:, 0]  # telemetry value is at position 0
+
+        # TODO:
+        # test and train are exact same. need to check
 
     def load_data(self):
         """
