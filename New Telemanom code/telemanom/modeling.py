@@ -106,6 +106,7 @@ class Model:
                            verbose=True)
         elif (model_name=="Transformer"):
             self.model = NARTransformerModel() # improvize
+            
         
         # LSTM till here
 
