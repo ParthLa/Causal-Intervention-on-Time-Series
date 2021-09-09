@@ -1,7 +1,7 @@
-from keras.models import Sequential, load_model
-from keras.callbacks import History, EarlyStopping, Callback
-from keras.layers.recurrent import LSTM
-from keras.layers.core import Dense, Activation, Dropout
+from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.callbacks import History, EarlyStopping, Callback
+# from tensorflow.keras.layers.recurrent import LSTM
+# from tensorflow.keras.layers.core import Dense, Activation, Dropout
 import numpy as np
 import os
 import logging
@@ -76,35 +76,36 @@ class Model:
                                         verbose=0)]
 
         if(model_name=="LSTM"):
-            self.model = Sequential()
-            self.model.add(LSTM(
-                self.config.layers[0],
-                input_shape=(None, channel.X_train.shape[2]),
-                return_sequences=True))
-            self.model.add(Dropout(self.config.dropout))
+            print("Hi")
+            # self.model = Sequential()
+            # self.model.add(LSTM(
+            #     self.config.layers[0],
+            #     input_shape=(None, channel.X_train.shape[2]),
+            #     return_sequences=True))
+            # self.model.add(Dropout(self.config.dropout))
 
-            self.model.add(LSTM(
-                self.config.layers[1],
-                return_sequences=False))
-            self.model.add(Dropout(self.config.dropout))
+            # self.model.add(LSTM(
+            #     self.config.layers[1],
+            #     return_sequences=False))
+            # self.model.add(Dropout(self.config.dropout))
 
-            self.model.add(Dense(
-                self.config.n_predictions))
-            self.model.add(Activation('linear'))
+            # self.model.add(Dense(
+            #     self.config.n_predictions))
+            # self.model.add(Activation('linear'))
 
-            # adding layers is independent of number of time steps prediction
+            # # adding layers is independent of number of time steps prediction
 
-            self.model.compile(loss=self.config.loss_metric,
-                               optimizer=self.config.optimizer)
+            # self.model.compile(loss=self.config.loss_metric,
+            #                    optimizer=self.config.optimizer)
 
-            self.model.fit(channel.X_train,
-                           channel.y_train,
-                           batch_size=self.config.lstm_batch_size,
-                           epochs=self.config.epochs,
-                           validation_split=self.config.validation_split,
-                           callbacks=cbs,
-                           verbose=True)
-        elif (model_name=="Transformer"):
+            # self.model.fit(channel.X_train,
+            #                channel.y_train,
+            #                batch_size=self.config.lstm_batch_size,
+            #                epochs=self.config.epochs,
+            #                validation_split=self.config.validation_split,
+            #                callbacks=cbs,
+            #                verbose=True)
+        elif (model_name=="TRANSFORMER"):
             self.model = NARTransformerModel() # improvize
             
         

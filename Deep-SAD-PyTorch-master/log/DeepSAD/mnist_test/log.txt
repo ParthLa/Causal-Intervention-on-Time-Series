@@ -1,0 +1,14 @@
+2021-09-09 15:46:50,630 - root - INFO - Log file is ../log/DeepSAD/mnist_test/log.txt
+2021-09-09 15:46:50,631 - root - INFO - Data path is ../data
+2021-09-09 15:46:50,631 - root - INFO - Export path is ../log/DeepSAD/mnist_test
+2021-09-09 15:46:50,631 - root - INFO - Dataset: mnist
+2021-09-09 15:46:50,631 - root - INFO - Normal class: 0
+2021-09-09 15:46:50,631 - root - INFO - Ratio of labeled normal train samples: 0.00
+2021-09-09 15:46:50,631 - root - INFO - Ratio of labeled anomalous samples: 0.01
+2021-09-09 15:46:50,631 - root - INFO - Pollution ratio of unlabeled train data: 0.10
+2021-09-09 15:46:50,631 - root - INFO - Known anomaly class: 1
+2021-09-09 15:46:50,631 - root - INFO - Network: mnist_LeNet
+2021-09-09 15:46:50,631 - root - INFO - Eta-parameter: 1.00
+2021-09-09 15:46:50,631 - root - INFO - Computation device: cpu
+2021-09-09 15:46:50,631 - root - INFO - Number of threads: 0
+2021-09-09 15:46:50,631 - root - INFO - Number of dataloader workers: 0

@@ -199,7 +199,7 @@ class Detector:
             channel.load_data()
 
             if self.config.predict:
-                model = Model(self.config, self.id, channel, "LSTM") # the last argument can be: LSTM / Transformer
+                model = Model(self.config, self.id, channel, "TRANSFORMER") # the last argument can be: LSTM / TRANSFORMER
                 channel = model.batch_predict(channel)
             else:
                 channel.y_hat = np.load(os.path.join('data', self.id, 'y_hat',
