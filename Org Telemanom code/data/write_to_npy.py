@@ -4,8 +4,8 @@ import os
 train = 'train/'
 test = 'test/'
 
-train_lbl = 'train_lbl.txt'
-test_lbl = 'test_lbl.txt'
+train_lbl = 'train_lbl.npy'
+test_lbl = 'test_lbl.npy'
 
 # A1_train = np.load(train+'P-2.npy')
 # A1_test = np.load(test+'P-2.npy')
@@ -23,7 +23,7 @@ def anomaly(vec, avg, delta):
 		temp=1
 	return temp
 
-with open(train_lbl, 'w') as t:
+with open(train_lbl, 'wb+') as t:
 	for file in os.listdir(train):
 		# print(file)
 
@@ -43,13 +43,15 @@ with open(train_lbl, 'w') as t:
 				delta = 0.5
 				if(anomaly(vec, avg, delta)==1):
 					ans[i]=1
-			t.write(file)
-			t.write('\n')
-			t.write(str(ans))
-			t.write('\n')
+			ans=np.array(ans)
+			# t.write(file)
+			# t.write('\n')
+			# t.write(ans)
+			# t.write('\n')
+			np.save(t, ans)
 	t.close()
 
-with open(test_lbl, 'w') as t:
+with open(test_lbl, 'wb+') as t:
 	for file in os.listdir(test):
 		# print(file)
 
@@ -69,8 +71,10 @@ with open(test_lbl, 'w') as t:
 				delta = 0.5
 				if(anomaly(vec, avg, delta)==1):
 					ans[i]=1
-			t.write(file)
-			t.write('\n')
-			t.write(str(ans))
-			t.write('\n')
+			ans=np.array(ans)
+			# t.write(file)
+			# t.write('\n')
+			# t.write(str(ans))
+			# t.write('\n')
+			np.save(t, ans)
 	t.close()
